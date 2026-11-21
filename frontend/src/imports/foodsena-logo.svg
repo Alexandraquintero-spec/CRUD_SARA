@@ -1,0 +1,26 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Plato circular -->
+  <circle cx="60" cy="60" r="50" fill="#39A900" opacity="0.1"/>
+  <circle cx="60" cy="60" r="45" stroke="#39A900" stroke-width="3"/>
+
+  <!-- Cubiertos -->
+  <g transform="translate(35, 35)">
+    <!-- Tenedor -->
+    <path d="M8 5 L8 45 M4 5 L4 20 M8 20 L4 20 M12 5 L12 20 M8 20 L12 20"
+          stroke="#FF6B00" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Cuchillo -->
+    <path d="M32 5 L32 45 M28 5 L32 12"
+          stroke="#39A900" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Cuchara -->
+    <path d="M42 5 L42 30 M42 8 Q46 10 46 14 Q46 18 42 20"
+          stroke="#FF6B00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Texto foodSena -->
+  <text x="60" y="100" font-family="Arial, sans-serif" font-size="16" font-weight="bold"
+        fill="#39A900" text-anchor="middle">food</text>
+  <text x="60" y="115" font-family="Arial, sans-serif" font-size="14" font-weight="600"
+        fill="#FF6B00" text-anchor="middle">SENA</text>
+</svg>

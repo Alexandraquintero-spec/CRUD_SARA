@@ -1,0 +1,32 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Patrón decorativo sutil para fondos de dashboards -->
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <!-- Círculos sutiles -->
+      <circle cx="40" cy="40" r="1.5" fill="#39A900" opacity="0.03"/>
+      <circle cx="0" cy="0" r="1" fill="#FF6B00" opacity="0.02"/>
+      <circle cx="80" cy="0" r="1" fill="#39A900" opacity="0.02"/>
+      <circle cx="0" cy="80" r="1" fill="#FF6B00" opacity="0.02"/>
+      <circle cx="80" cy="80" r="1" fill="#39A900" opacity="0.02"/>
+
+      <!-- Líneas decorativas muy sutiles -->
+      <path d="M20,40 Q30,35 40,40 T60,40" stroke="#39A900" stroke-width="0.5" opacity="0.02" fill="none"/>
+      <path d="M40,20 Q35,30 40,40 T40,60" stroke="#FF6B00" stroke-width="0.5" opacity="0.02" fill="none"/>
+    </pattern>
+  </defs>
+
+  <!-- Aplicar el patrón -->
+  <rect width="800" height="800" fill="url(#grid)"/>
+
+  <!-- Formas adicionales muy sutiles -->
+  <circle cx="200" cy="200" r="80" fill="#39A900" opacity="0.01"/>
+  <circle cx="600" cy="400" r="100" fill="#FF6B00" opacity="0.01"/>
+  <circle cx="300" cy="600" r="60" fill="#39A900" opacity="0.01"/>
+
+  <!-- Iconos sutiles de gastronomía -->
+  <g opacity="0.015">
+    <path d="M100,100 L100,180 M85,100 L85,130 M100,130 L85,130 M115,100 L115,130 M100,130 L115,130" stroke="#39A900" stroke-width="2"/>
+    <path d="M650,150 L650,230 M635,150 L650,165" stroke="#FF6B00" stroke-width="2"/>
+    <path d="M450,500 L450,550 M450,515 Q460,520 460,530 Q460,540 450,545" stroke="#39A900" stroke-width="2" fill="none"/>
+  </g>
+</svg>

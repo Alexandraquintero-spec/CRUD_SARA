@@ -1,0 +1,53 @@
+/*
+ * Tema SARA para HeroUI v3.
+ * HeroUI usa estas variables en todos sus componentes (Button, Card, Alert, Chip, Tabs...).
+ * Paleta institucional: verde SENA #39A900 y naranja #F27C00.
+ */
+@layer base {
+  :root,
+  .light,
+  [data-theme="light"] {
+    --radius: 0.75rem;
+    --field-radius: 0.75rem;
+
+    --background: #f7f8f5;
+    --foreground: #11181c;
+
+    --surface: #ffffff;
+    --surface-secondary: #f1f3ee;
+    --surface-tertiary: #e9ece5;
+
+    --muted: #6b7280;
+
+    /* Color principal (botones primarios, pestañas, enlaces) */
+    --accent: #39a900;
+    --accent-foreground: #ffffff;
+
+    /* Estados */
+    --success: #39a900;
+    --success-foreground: #ffffff;
+    --warning: #f27c00;
+    --warning-foreground: #ffffff;
+    --danger: #e5484d;
+    --danger-foreground: #ffffff;
+
+    --border: #e4e7e0;
+    --separator: #e4e7e0;
+    --focus: #39a900;
+  }
+}
+
+/* Tokens propios disponibles como utilidades de Tailwind (bg-sara-green, text-sara-orange...) */
+@theme inline {
+  --color-sara-green: #39a900;
+  --color-sara-green-dark: #2e8a00;
+  --color-sara-green-50: #f1faeb;
+  --color-sara-green-100: #ddf2cf;
+  --color-sara-orange: #f27c00;
+  --color-sara-orange-dark: #c96600;
+  --color-sara-orange-50: #fff4e8;
+  --color-sara-orange-100: #ffe3c2;
+  --color-sara-ink: #11181c;
+  --color-sara-line: #e4e7e0;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
