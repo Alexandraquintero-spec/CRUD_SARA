@@ -1,4 +1,4 @@
-# =====================================================================
+﻿# =====================================================================
 # SARA · Instalación de la base de datos en PostgreSQL (Windows)
 #
 # Uso (desde la carpeta del proyecto):
