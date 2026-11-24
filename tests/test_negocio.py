@@ -1,4 +1,4 @@
-"""Reglas de negocio: usuarios, reservas con Nequi, ingreso facial/manual, inventario y deudas."""
+"""Reglas de negocio: usuarios, reservas con pago QR, ingreso facial/manual, inventario y deudas."""
 from tests.conftest import API, CONTRASENA, documento, unico, vector
 
 
@@ -42,8 +42,8 @@ def test_ficha_con_aprendices_borrado_logico(client, admin):
     assert client.get(f"{API}/fichas/{fid}", headers=admin).status_code == 404
 
 
-# ── Reservas, pago Nequi e ingreso facial ───────────────────────────
-def test_flujo_completo_reserva_nequi_e_ingreso_facial(client, admin, nuevo_aprendiz):
+# ── Reservas, pago con QR e ingreso facial ───────────────────────────
+def test_flujo_completo_reserva_qr_e_ingreso_facial(client, admin, nuevo_aprendiz):
     uid, headers = nuevo_aprendiz
     semilla = 5000 + uid
     # Registro facial con autorización
@@ -56,11 +56,11 @@ def test_flujo_completo_reserva_nequi_e_ingreso_facial(client, admin, nuevo_apre
     r = client.post(f"{API}/ingresos/verificacion-facial", headers=admin, json={"vector_facial": vector(semilla)})
     assert r.json()["color"] == "rojo" and "reserva" in r.json()["mensaje"]
 
-    # Reserva -> pendiente de pago con QR de Nequi
-    r = client.post(f"{API}/reservas", headers=headers, json={"medio_pago": "nequi"})
+    # Reserva -> pendiente de pago con código QR
+    r = client.post(f"{API}/reservas", headers=headers, json={"medio_pago": "qr"})
     assert r.status_code == 201, r.text
     reserva = r.json()["reserva"]
-    assert reserva["estado"] == "pendiente_pago" and r.json()["pago"]["contenido_qr"].startswith("NEQUI|SARA|")
+    assert reserva["estado"] == "pendiente_pago" and r.json()["pago"]["contenido_qr"].startswith("SARA-PAGO|")
     # Una sola reserva por día
     assert client.post(f"{API}/reservas", headers=headers, json={}).status_code == 409
 
