@@ -2222,7 +2222,7 @@
       "description": ""
     },
     {
-      "name": "04 · Reservas y pago con QR de Nequi",
+      "name": "04 · Reservas y pago con código QR",
       "item": [
         {
           "name": "Aprendiz intenta cuenta institucional (400)",
@@ -2272,7 +2272,7 @@
           ]
         },
         {
-          "name": "Reservar almuerzo (aprendiz) - genera QR de Nequi",
+          "name": "Reservar almuerzo (aprendiz) - genera código QR de pago",
           "request": {
             "method": "POST",
             "header": [
@@ -2297,7 +2297,7 @@
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"medio_pago\": \"nequi\"\n}",
+              "raw": "{\n  \"medio_pago\": \"qr\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2313,7 +2313,7 @@
                 "exec": [
                   "pm.test(\"Código de estado 201\", function () { pm.response.to.have.status(201); });",
                   "pm.collectionVariables.set(\"id_reserva\", pm.response.json().reserva.id);",
-                  "pm.test(\"Queda pendiente de pago con QR\", () => { const b = pm.response.json(); pm.expect(b.reserva.estado).to.eql(\"pendiente_pago\"); pm.expect(b.pago.contenido_qr).to.include(\"NEQUI\"); });"
+                  "pm.test(\"Queda pendiente de pago con QR\", () => { const b = pm.response.json(); pm.expect(b.reserva.estado).to.eql(\"pendiente_pago\"); pm.expect(b.pago.contenido_qr).to.include(\"SARA-PAGO\"); });"
                 ]
               }
             }
@@ -2345,7 +2345,7 @@
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"medio_pago\": \"nequi\"\n}",
+              "raw": "{\n  \"medio_pago\": \"qr\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2367,7 +2367,7 @@
           ]
         },
         {
-          "name": "Ver datos del QR de Nequi",
+          "name": "Ver datos del código QR de pago",
           "request": {
             "method": "GET",
             "header": [
@@ -2406,7 +2406,7 @@
           ]
         },
         {
-          "name": "Confirmar pago con Nequi",
+          "name": "Confirmar pago con código QR",
           "request": {
             "method": "POST",
             "header": [
@@ -2916,7 +2916,7 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/reservas?medio_pago=nequi&pagina=1&tamano=10",
+              "raw": "{{baseUrl}}/reservas?medio_pago=qr&pagina=1&tamano=10",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2926,7 +2926,7 @@
               "query": [
                 {
                   "key": "medio_pago",
-                  "value": "nequi"
+                  "value": "qr"
                 },
                 {
                   "key": "pagina",
@@ -4211,7 +4211,7 @@
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"valor\": 5000,\n  \"medio_pago\": \"nequi\",\n  \"observacion\": \"Abono por Nequi\"\n}",
+              "raw": "{\n  \"valor\": 5000,\n  \"medio_pago\": \"qr\",\n  \"observacion\": \"Abono con código QR\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

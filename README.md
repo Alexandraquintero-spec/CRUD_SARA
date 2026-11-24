@@ -8,7 +8,7 @@ Este repositorio también trae el **frontend** (React + Vite) en la carpeta `fro
 SARA organiza el almuerzo de aprendices e instructores:
 
 1. El **administrador** registra los usuarios (no hay autorregistro), las fichas, el menú del día y los precios.
-2. El **aprendiz** reserva entre **7:00 y 9:00 a. m.** y paga con el **QR de Nequi que muestra el sistema**, así que no sale del ambiente de formación. Los aprendices **beneficiarios** no pagan.
+2. El **aprendiz** reserva entre **7:00 y 9:00 a. m.** y paga con el **código QR que muestra el sistema**, así que no sale del ambiente de formación. Los aprendices **beneficiarios** no pagan.
 3. Al mediodía (12:00 m. a 1:30 p. m.) entra al comedor por **reconocimiento facial**:
    - 🟢 **verde**: tiene reserva confirmada y puede seguir;
    - 🔴 **rojo**: no puede entrar y el sistema dice por qué (sin reserva, sin pago, ya entró, aforo completo o rostro no reconocido).
@@ -177,7 +177,7 @@ La contraseña de **todos** es `Sara2026*` (en la base solo se guarda su hash bc
 | Autenticación | `POST /auth/login`, `POST /auth/refresh`, `GET /auth/me`, `PUT /auth/me/password` |
 | Usuarios, roles y fichas | CRUD `/usuarios`, `PATCH /usuarios/{id}/estado`, `PATCH /usuarios/{id}/rol`, `GET /roles`, CRUD `/fichas` |
 | Menú y precios | CRUD `/menus`, `POST /menus/{id}/publicar`, `GET /menus/hoy`, `/precios`, `GET /precios/vigentes` |
-| Reservas y Nequi | `POST /reservas`, `GET /reservas/{id}/pago`, `POST /reservas/{id}/confirmar-pago`, `POST /reservas/{id}/cancelar` |
+| Reservas y pago con QR | `POST /reservas`, `GET /reservas/{id}/pago`, `POST /reservas/{id}/confirmar-pago`, `POST /reservas/{id}/cancelar` |
 | Ingreso al comedor | `POST /ingresos/verificacion-facial`, `POST /ingresos/manual`, `POST /ingresos/{id}/salida`, `GET /ingresos/aforo`, `GET /ingresos` |
 | Biometría | `POST /biometria`, `GET/DELETE /biometria/{usuario_id}` |
 | Deudas | `GET /deudas`, `GET /deudas/mia`, `GET/POST /deudas/{instructor_id}/pagos` |
