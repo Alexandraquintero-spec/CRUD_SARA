@@ -69,7 +69,7 @@ class PagoDeuda(AuditoriaMixin, Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     instructor_id: Mapped[int] = mapped_column(ForeignKey("usuario.id"))
     valor: Mapped[Decimal] = mapped_column(Numeric(10, 2))
-    medio_pago: Mapped[str] = mapped_column(String(15), default="nequi")
+    medio_pago: Mapped[str] = mapped_column(String(15), default="qr")
     observacion: Mapped[str | None] = mapped_column(String(200))
 
 

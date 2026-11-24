@@ -78,16 +78,16 @@ class PrecioSalida(SalidaBase):
 
 # ── Reservas ─────────────────────────────────────────────────────────
 class ReservaEntrada(EntradaBase):
-    medio_pago: Literal["nequi", "cuenta_institucional"] = Field(
-        default="nequi",
-        description="Aprendiz: siempre nequi (o sin costo si es beneficiario). Instructor: nequi o cuenta_institucional.",
+    medio_pago: Literal["qr", "cuenta_institucional"] = Field(
+        default="qr",
+        description="Aprendiz: siempre qr (o sin costo si es beneficiario). Instructor: qr o cuenta_institucional.",
     )
 
 
 class ConfirmarPagoEntrada(EntradaBase):
     codigo_transaccion: str = Field(
         min_length=6, max_length=30, pattern=r"^[A-Za-z0-9-]+$",
-        description="Código de la transacción que muestra Nequi al pagar", examples=["M1234567"],
+        description="Código de la transacción que entrega la aplicación de pago", examples=["M1234567"],
     )
 
 
@@ -116,16 +116,16 @@ class ReservaSalida(SalidaBase):
         )
 
 
-class PagoNequi(BaseModel):
+class PagoQR(BaseModel):
     referencia: str
     valor: Decimal
-    contenido_qr: str = Field(description="Texto que el frontend convierte en el QR de Nequi que se muestra en pantalla")
+    contenido_qr: str = Field(description="Texto que el frontend convierte en el código QR de pago que se muestra en pantalla")
     instrucciones: list[str]
 
 
 class ReservaCreadaSalida(BaseModel):
     reserva: ReservaSalida
-    pago: PagoNequi | None = Field(description="Datos del QR de Nequi; null si el almuerzo no tiene costo")
+    pago: PagoQR | None = Field(description="Datos del código QR de pago; null si el almuerzo no tiene costo")
 
 
 # ── Biometría ────────────────────────────────────────────────────────
@@ -211,7 +211,7 @@ class AforoSalida(BaseModel):
 # ── Deudas de instructores ──────────────────────────────────────────
 class PagoDeudaEntrada(EntradaBase):
     valor: Decimal = Field(gt=0, max_digits=10, decimal_places=2)
-    medio_pago: Literal["nequi", "efectivo", "transferencia"] = "nequi"
+    medio_pago: Literal["qr", "efectivo", "transferencia"] = "qr"
     observacion: str | None = Field(default=None, max_length=200)
 
 

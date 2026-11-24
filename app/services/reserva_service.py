@@ -1,12 +1,12 @@
-"""Reserva del almuerzo con pago mediante el QR de Nequi mostrado en el sistema.
+"""Reserva del almuerzo con pago mediante el código QR mostrado en el sistema.
 
 Reglas:
 - Se reserva de 7:00 a 9:00 a. m. (configurable), una sola reserva por persona y día.
 - Debe existir un menú publicado para hoy.
 - El aprendiz debe tener la ficha activa y la alimentación habilitada.
 - Aprendiz beneficiario: almuerzo sin costo (queda confirmada de inmediato).
-- Aprendiz normal: paga con Nequi; la reserva queda "pendiente_pago" hasta confirmar el pago.
-- Instructor: paga con Nequi o lo carga a su cuenta institucional (genera deuda).
+- Aprendiz normal: paga escaneando el código QR; la reserva queda "pendiente_pago" hasta confirmar el pago.
+- Instructor: paga con el código QR o lo carga a su cuenta institucional (genera deuda).
 - No hay boleta: el ingreso al comedor es por reconocimiento facial.
 """
 import secrets
@@ -21,7 +21,7 @@ from app.core.permissions import ADMIN, APRENDIZ, INSTRUCTOR
 from app.models import Reserva, Usuario
 from app.repositories.servicio_repository import MenuRepository, ReservaRepository
 from app.schemas.comun import Pagina
-from app.schemas.servicio import PagoNequi, ReservaCreadaSalida, ReservaEntrada, ReservaSalida
+from app.schemas.servicio import PagoQR, ReservaCreadaSalida, ReservaEntrada, ReservaSalida
 from app.services.menu_service import PrecioService
 
 
@@ -47,16 +47,16 @@ class ReservaService:
         return Pagina.crear([ReservaSalida.desde(r) for r in items], total, pagina, tamano)
 
     # ── Crear reserva ────────────────────────────────────────────────
-    def _pago_nequi(self, reserva: Reserva) -> PagoNequi:
+    def _pago_qr(self, reserva: Reserva) -> PagoQR:
         valor = int(reserva.valor)
-        return PagoNequi(
+        return PagoQR(
             referencia=reserva.referencia_pago,
             valor=reserva.valor,
-            contenido_qr=f"NEQUI|SARA|{reserva.referencia_pago}|{valor}",
+            contenido_qr=f"SARA-PAGO|{reserva.referencia_pago}|{valor}",
             instrucciones=[
-                "Abra la app Nequi en su celular.",
-                "Elija «Pagar con QR» y escanee el código que aparece en pantalla.",
-                f"Confirme el pago de ${valor:,}".replace(",", ".") + " en Nequi.",
+                "Abra la aplicación de pagos de su banco o billetera digital.",
+                "Escanee el código QR que aparece en pantalla.",
+                f"Confirme el pago de ${valor:,}".replace(",", ".") + ".",
                 "Ingrese el código de la transacción en SARA para confirmar la reserva.",
             ],
         )
@@ -92,13 +92,13 @@ class ReservaService:
             if aprendiz.tipo == "beneficiario":
                 valor, medio, estado, pagada = Decimal(0), "sin_costo", "confirmada", ahora
             else:
-                valor, medio, estado, pagada = self.precios.vigente("comunidad_sena").valor, "nequi", "pendiente_pago", None
+                valor, medio, estado, pagada = self.precios.vigente("comunidad_sena").valor, "qr", "pendiente_pago", None
         else:
             valor = self.precios.vigente("comunidad_sena").valor
             if datos.medio_pago == "cuenta_institucional":
                 medio, estado, pagada = "cuenta_institucional", "confirmada", None
             else:
-                medio, estado, pagada = "nequi", "pendiente_pago", None
+                medio, estado, pagada = "qr", "pendiente_pago", None
 
         referencia = f"SARA-{actor.id}-{hoy:%Y%m%d}-{secrets.token_hex(2).upper()}"
         reserva = Reserva(
@@ -108,7 +108,7 @@ class ReservaService:
         self.reservas.agregar(reserva, actor.id)
         self.reservas.confirmar()
         reserva = self.reservas.refrescar(reserva)
-        pago = self._pago_nequi(reserva) if medio == "nequi" else None
+        pago = self._pago_qr(reserva) if medio == "qr" else None
         return ReservaCreadaSalida(reserva=ReservaSalida.desde(reserva), pago=pago)
 
     # ── Confirmar pago ───────────────────────────────────────────────
@@ -126,11 +126,11 @@ class ReservaService:
         self.reservas.confirmar()
         return reserva
 
-    def pago_pendiente(self, reserva_id: int, actor: Usuario) -> PagoNequi:
+    def pago_pendiente(self, reserva_id: int, actor: Usuario) -> PagoQR:
         reserva = self.obtener(reserva_id, actor)
-        if reserva.estado != "pendiente_pago" or reserva.medio_pago != "nequi":
-            raise Conflicto("La reserva no tiene un pago con Nequi pendiente.")
-        return self._pago_nequi(reserva)
+        if reserva.estado != "pendiente_pago" or reserva.medio_pago != "qr":
+            raise Conflicto("La reserva no tiene un pago con código QR pendiente.")
+        return self._pago_qr(reserva)
 
     # ── Cancelar ─────────────────────────────────────────────────────
     def cancelar(self, reserva_id: int, actor: Usuario) -> Reserva:

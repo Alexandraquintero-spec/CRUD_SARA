@@ -169,7 +169,7 @@ reportes_router = APIRouter(prefix="/reportes", tags=["Reportes"])
 
 
 @reportes_router.get("/resumen", response_model=ResumenSalida, summary="Resumen del servicio",
-                     description="Reservas, ingresos, recaudo por Nequi, visitantes y desperdicio en el rango indicado.\n\n" + rol(ADMIN),
+                     description="Reservas, ingresos, recaudo por pagos con código QR, visitantes y desperdicio en el rango indicado.\n\n" + rol(ADMIN),
                      responses=respuestas(400, 401, 403, 422))
 def resumen(desde: Desde = None, hasta: Hasta = None, _: Usuario = Depends(solo_admin),
             db: Session = Depends(get_db)):

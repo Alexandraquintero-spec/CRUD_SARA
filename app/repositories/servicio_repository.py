@@ -130,10 +130,10 @@ class ReservaRepository(BaseRepository[Reserva]):
         ).all()
         return {estado: total for estado, total in filas}
 
-    def recaudo_nequi(self, desde: date, hasta: date) -> Decimal:
+    def recaudo_qr(self, desde: date, hasta: date) -> Decimal:
         valor = self.db.scalar(
             select(func.coalesce(func.sum(Reserva.valor), 0)).where(
-                Reserva.fecha.between(desde, hasta), Reserva.medio_pago == "nequi", Reserva.pagada_en.is_not(None),
+                Reserva.fecha.between(desde, hasta), Reserva.medio_pago == "qr", Reserva.pagada_en.is_not(None),
                 Reserva.estado != "cancelada",
             )
         )

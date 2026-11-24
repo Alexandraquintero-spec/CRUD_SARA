@@ -166,7 +166,7 @@ COMMENT ON TABLE precio IS 'Precio del almuerzo por tipo de comensal; un único 
 CREATE UNIQUE INDEX uq_precio_activo_tipo ON precio(tipo) WHERE activo = TRUE;
 
 -- ---------------------------------------------------------------------
--- 7. RESERVA (pago con QR de Nequi dentro del sistema)
+-- 7. RESERVA (pago con código QR dentro del sistema)
 -- ---------------------------------------------------------------------
 CREATE TABLE reserva (
     id              SERIAL        PRIMARY KEY,
@@ -187,11 +187,11 @@ CREATE TABLE reserva (
     CONSTRAINT uq_reserva_referencia UNIQUE (referencia_pago),
     CONSTRAINT uq_reserva_transaccion UNIQUE (codigo_transaccion),
     CONSTRAINT ck_reserva_valor CHECK (valor >= 0),
-    CONSTRAINT ck_reserva_medio CHECK (medio_pago IN ('nequi', 'sin_costo', 'cuenta_institucional')),
+    CONSTRAINT ck_reserva_medio CHECK (medio_pago IN ('qr', 'sin_costo', 'cuenta_institucional')),
     CONSTRAINT ck_reserva_estado CHECK (estado IN ('pendiente_pago', 'confirmada', 'cancelada', 'consumida', 'no_consumida')),
     CONSTRAINT ck_reserva_pago CHECK (estado <> 'confirmada' OR pagada_en IS NOT NULL OR medio_pago = 'cuenta_institucional')
 );
-COMMENT ON TABLE reserva IS 'Reserva diaria del almuerzo (7:00-9:00 a. m.); el pago se hace con el QR de Nequi del sistema';
+COMMENT ON TABLE reserva IS 'Reserva diaria del almuerzo (7:00-9:00 a. m.); el pago se hace con el código QR que muestra el sistema';
 CREATE UNIQUE INDEX uq_reserva_usuario_fecha ON reserva(usuario_id, fecha) WHERE estado <> 'cancelada';
 CREATE INDEX ix_reserva_fecha_estado ON reserva(fecha, estado);
 
@@ -202,14 +202,14 @@ CREATE TABLE pago_deuda (
     id              SERIAL        PRIMARY KEY,
     instructor_id   INTEGER       NOT NULL REFERENCES usuario(id),
     valor           NUMERIC(10,2) NOT NULL,
-    medio_pago      VARCHAR(15)   NOT NULL DEFAULT 'nequi',
+    medio_pago      VARCHAR(15)   NOT NULL DEFAULT 'qr',
     observacion     VARCHAR(200),
     creado_por      INTEGER       REFERENCES usuario(id),
     creado_en       TIMESTAMPTZ   NOT NULL DEFAULT now(),
     actualizado_por INTEGER       REFERENCES usuario(id),
     actualizado_en  TIMESTAMPTZ,
     CONSTRAINT ck_pago_deuda_valor CHECK (valor > 0),
-    CONSTRAINT ck_pago_deuda_medio CHECK (medio_pago IN ('nequi', 'efectivo', 'transferencia'))
+    CONSTRAINT ck_pago_deuda_medio CHECK (medio_pago IN ('qr', 'efectivo', 'transferencia'))
 );
 COMMENT ON TABLE pago_deuda IS 'Abonos de instructores a la deuda de almuerzos tomados a cuenta institucional';
 CREATE INDEX ix_pago_deuda_instructor ON pago_deuda(instructor_id);

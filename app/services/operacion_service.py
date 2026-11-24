@@ -193,7 +193,7 @@ class ReporteService:
             reservas_canceladas=estados.get("cancelada", 0),
             ingresos_permitidos=ingresos["permitidos"], ingresos_denegados=ingresos["denegados"],
             ingresos_manuales=ingresos["manuales"],
-            recaudo_nequi=self.reservas.recaudo_nequi(desde, hasta),
+            recaudo_qr=self.reservas.recaudo_qr(desde, hasta),
             visitantes=n_visit, recaudo_visitantes=recaudo_visit,
             almuerzos_preparados=preparados, almuerzos_entregados=entregados,
             desperdicio_estimado=max(0, preparados - entregados),

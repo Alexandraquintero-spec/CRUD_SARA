@@ -210,7 +210,7 @@ class ResumenSalida(BaseModel):
     ingresos_permitidos: int
     ingresos_denegados: int
     ingresos_manuales: int
-    recaudo_nequi: Decimal
+    recaudo_qr: Decimal
     visitantes: int
     recaudo_visitantes: Decimal
     almuerzos_preparados: int
