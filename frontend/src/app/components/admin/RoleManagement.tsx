@@ -163,7 +163,7 @@ export default function RoleManagement() {
                 <h3 className="text-xl font-extrabold">Carga masiva de cuentas</h3>
                 <p className="text-sm text-white/85 max-w-xl mt-1">
                   Incorpora grupos completos de aprendices o instructores con un solo archivo.
-                  Cada usuario también puede crear su propia cuenta con su rol.
+                  Solo el administrador crea las cuentas y asigna el rol de cada usuario.
                 </p>
               </div>
             </div>

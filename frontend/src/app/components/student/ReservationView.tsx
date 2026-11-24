@@ -23,8 +23,8 @@ interface ReservationViewProps {
 }
 
 /*
- * Reserva del almuerzo: el aprendiz reserva entre 7:00 y 9:00 a. m. y paga con el QR
- * de Nequi que muestra el sistema. No hay boleta: al mediodía ingresa con reconocimiento facial.
+ * Reserva del almuerzo: el aprendiz reserva entre 7:00 y 9:00 a. m. y paga con el código QR
+ * que muestra el sistema. No hay boleta: al mediodía ingresa con reconocimiento facial.
  */
 type ViewState = "info" | "confirm" | "confirmed";
 
@@ -39,7 +39,7 @@ const G500 = "#39A900";
 const G600 = "#2E8A00";
 const O500 = "#F27C00";
 
-/* QR de pago (representación visual del código que se escanea con Nequi) */
+/* QR de pago (representación visual del código que se escanea para pagar) */
 function PaymentQR({ value }: { value: string }) {
   const size = 25;
   const cells = Array.from({ length: size * size }, (_, i) => {
@@ -65,7 +65,7 @@ function PaymentQR({ value }: { value: string }) {
     <div className="inline-block rounded-3xl bg-white p-4 shadow-xl ring-1 ring-black/5">
       <div className="grid gap-[2px]" style={{ gridTemplateColumns: `repeat(${size}, 8px)` }}>
         {cells.map((on, i) => (
-          <span key={i} className="block w-2 h-2 rounded-[1.5px]" style={{ backgroundColor: on ? "#1B0A24" : "transparent" }} />
+          <span key={i} className="block w-2 h-2 rounded-[1.5px]" style={{ backgroundColor: on ? "#111827" : "transparent" }} />
         ))}
       </div>
     </div>
@@ -222,7 +222,7 @@ export default function ReservationView({ userIdentifier, onNewRecord, user }: R
     );
   }
 
-  // ── PAGAR CON NEQUI Y CONFIRMAR ──
+  // ── PAGAR CON CÓDIGO QR Y CONFIRMAR ──
   if (view === "confirm") {
     const isFree = LUNCH_PRICE === 0;
     return (
@@ -233,12 +233,12 @@ export default function ReservationView({ userIdentifier, onNewRecord, user }: R
         </Button>
 
         <Card className="overflow-hidden p-0 gap-0 rounded-3xl border-0 shadow-xl">
-          <div className="relative px-6 py-6 text-white" style={{ background: "linear-gradient(135deg, #2D0A3E 0%, #5B1A7A 55%, #C2187A 100%)" }}>
+          <div className="relative px-6 py-6 text-white" style={{ background: "linear-gradient(135deg, #123D05 0%, #236B05 55%, #39A900 100%)" }}>
             <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-white/10" aria-hidden="true" />
             <div className="relative flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs text-white/75">{isFree ? "Almuerzo de beneficiario" : "Paga tu almuerzo"}</p>
-                <h3 className="text-2xl font-extrabold">{isFree ? "Sin costo" : "Pago con Nequi"}</h3>
+                <h3 className="text-2xl font-extrabold">{isFree ? "Sin costo" : "Pago con código QR"}</h3>
               </div>
               <div className="text-right">
                 <p className="text-xs text-white/75">Total</p>
@@ -263,26 +263,19 @@ export default function ReservationView({ userIdentifier, onNewRecord, user }: R
                 </div>
                 <ol className="space-y-2.5">
                   {[
-                    "Abre la app Nequi en tu celular.",
-                    "Elige «Pagar con QR» y escanea este código.",
-                    `Confirma el pago de ${price} en Nequi.`,
+                    "Abre la aplicación de pagos de tu banco o billetera digital.",
+                    "Escanea este código QR con tu celular.",
+                    `Confirma el pago de ${price}.`,
                     "Regresa aquí y presiona «Ya pagué».",
                   ].map((t, i) => (
                     <li key={i} className="flex gap-3 text-sm text-gray-700">
-                      <span className="w-6 h-6 flex-none rounded-full text-white text-xs font-bold flex items-center justify-center" style={{ backgroundColor: "#5B1A7A" }}>
+                      <span className="w-6 h-6 flex-none rounded-full text-white text-xs font-bold flex items-center justify-center" style={{ backgroundColor: "#2E8A00" }}>
                         {i + 1}
                       </span>
                       {t}
                     </li>
                   ))}
                 </ol>
-                <Alert status="accent">
-                  <Alert.Indicator />
-                  <Alert.Content>
-                    <Alert.Title>Ya no tienes que salir del ambiente</Alert.Title>
-                    <Alert.Description>El QR de pago aparece aquí mismo; no necesitas buscar el código impreso.</Alert.Description>
-                  </Alert.Content>
-                </Alert>
               </>
             )}
 
@@ -350,7 +343,7 @@ export default function ReservationView({ userIdentifier, onNewRecord, user }: R
         <Card.Content>
           <ol className="space-y-3">
             {[
-              "Reserva entre las 7:00 y las 9:00 a. m. y paga con el QR de Nequi que aparece en pantalla.",
+              "Reserva entre las 7:00 y las 9:00 a. m. y paga con el código QR que aparece en pantalla.",
               "De 12:00 m. a 1:30 p. m. párate frente a la cámara del comedor.",
               "Si tienes reserva, la pantalla se pone en verde y sigues; si no, en rojo y te indica el motivo.",
             ].map((t, i) => (

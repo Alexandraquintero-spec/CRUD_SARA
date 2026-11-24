@@ -150,7 +150,7 @@ export default function LoginPage({
           <div className="relative space-y-6">
             <Brand size="md" tone="dark" subtitle="Sistema gastronómico SENA" />
             <p className="text-sm text-white/85 leading-relaxed">
-              Reserva y paga tu almuerzo con Nequi, y entra al comedor con reconocimiento facial.
+              Reserva y paga tu almuerzo con código QR, y entra al comedor con reconocimiento facial.
             </p>
             <div className="space-y-2.5">
               {[

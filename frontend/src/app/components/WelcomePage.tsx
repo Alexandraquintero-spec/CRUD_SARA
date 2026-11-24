@@ -37,7 +37,7 @@ const O = { 700: "#B35A00", 600: "#DB6E00", 500: "#F27C00", 300: "#FFC27A", 100:
 const CREAM = "#FFFBF5";
 
 const features = [
-  { icon: UtensilsCrossed, title: "Reserva y pago con Nequi", desc: "Reserva entre las 7:00 y las 9:00 a. m. y paga escaneando el QR de Nequi en pantalla.", color: G[500] },
+  { icon: UtensilsCrossed, title: "Reserva y pago con QR", desc: "Reserva entre las 7:00 y las 9:00 a. m. y paga escaneando el código QR que aparece en pantalla.", color: G[500] },
   { icon: ScanFace, title: "Ingreso con reconocimiento facial", desc: "Te paras frente a la cámara y el sistema valida tu reserva en segundos. Sin filas ni papeles.", color: O[500] },
   { icon: ShoppingBag, title: "Tienda agrícola", desc: "Productos frescos cultivados por los aprendices del programa.", color: G[600] },
   { icon: Calendar, title: "Menú del día", desc: "Consulta los platos y sus ingredientes antes de reservar.", color: O[600] },
@@ -130,7 +130,7 @@ export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
             </h1>
 
             <p className="text-lg text-white/85 max-w-xl leading-relaxed">
-              Reserva y paga tu almuerzo con Nequi desde la plataforma, y entra al comedor con reconocimiento facial, sin filas ni papeles.
+              Reserva y paga tu almuerzo con código QR desde la plataforma, y entra al comedor con reconocimiento facial, sin filas ni papeles.
               Todo el restaurante del SENA en una sola plataforma.
             </p>
 
@@ -262,7 +262,7 @@ export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
               </p>
               <ol className="mt-8 space-y-4">
                 {[
-                  { n: "1", t: "Reserva y paga tu almuerzo", d: "Entre las 7:00 y las 9:00 a. m., con el QR de Nequi que aparece en la plataforma." },
+                  { n: "1", t: "Reserva y paga tu almuerzo", d: "Entre las 7:00 y las 9:00 a. m., con el código QR que aparece en la plataforma." },
                   { n: "2", t: "Párate frente a la cámara", d: "El sistema lee tus rasgos faciales y busca tu reserva del día." },
                   { n: "3", t: "Sigue la indicación de la pantalla", d: "En verde puedes seguir; en rojo te indica por qué no puedes ingresar." },
                 ].map((st) => (
