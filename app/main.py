@@ -16,17 +16,6 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 
 DESCRIPCION = """
 API REST de **SARA** para el servicio de alimentación del área de Gastronomía del SENA.
-
-**Flujo del servicio**
-1. El administrador registra usuarios, fichas, el menú del día y los precios.
-2. El aprendiz reserva entre 7:00 y 9:00 a. m. y paga con el **QR de Nequi que muestra el sistema** (no sale del ambiente).
-3. Al mediodía ingresa al comedor por **reconocimiento facial**: verde = tiene reserva; rojo = se niega con el motivo.
-4. Si un aprendiz cede su almuerzo, el administrador registra el **ingreso manual** del receptor.
-
-**Autenticación:** todos los endpoints son privados excepto `POST /api/v1/auth/login`.
-Use el botón **Authorize** con el `access_token` recibido.
-
-**Roles:** administrador, instructor y aprendiz. 401 = sin token o token inválido; 403 = rol sin permiso.
 """
 
 app = FastAPI(
