@@ -16,3 +16,5 @@ frontend/dist/
 .DS_Store
 Thumbs.db
 .env.respaldo_mongo
+.claude/
+frontend/.env.local
